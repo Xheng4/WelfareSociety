@@ -205,7 +205,7 @@
         <item name="android:drawablePadding">7dp</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingTop">7dp</item>
-        <item name="android:textColor">#fff</item>
+        <item name="android:textColor">@color/main_botton_text_color</item>
         <item name="android:onClick">onCheckedChange</item>
     </style>
     <style name="menu_item_style_cart">
