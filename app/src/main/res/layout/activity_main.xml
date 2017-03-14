@@ -13,6 +13,7 @@
         android:orientation="horizontal">
 
         <RadioButton
+            android:id="@+id/rb_new_goods"
             style="@style/menu_item_style"
             android:button="@null"
             android:checked="false"
@@ -20,6 +21,7 @@
             android:text="新品" />
 
         <RadioButton
+            android:id="@+id/rb_boutique"
             style="@style/menu_item_style"
             android:button="@null"
             android:checked="false"
@@ -27,6 +29,7 @@
             android:text="精选" />
 
         <RadioButton
+            android:id="@+id/rb_category"
             style="@style/menu_item_style"
             android:button="@null"
             android:checked="false"
@@ -34,6 +37,7 @@
             android:text="分类" />
 
         <RadioButton
+            android:id="@+id/rb_cart"
             style="@style/menu_item_style"
             android:button="@null"
             android:checked="false"
@@ -41,6 +45,7 @@
             android:text="购物车" />
 
         <RadioButton
+            android:id="@+id/rb_personal_center"
             style="@style/menu_item_style"
             android:button="@null"
             android:checked="false"
