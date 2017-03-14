@@ -3,6 +3,7 @@
     package="com.example.xheng.welfaresociety">
 
     <application
+        android:name=".application.FuLiApplication"
         android:allowBackup="true"
         android:icon="@mipmap/launcher"
         android:label="@string/app_name"
