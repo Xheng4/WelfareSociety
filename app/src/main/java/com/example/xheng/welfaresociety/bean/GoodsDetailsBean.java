@@ -1,4 +1,4 @@
-package cn.ucai.fulicenter.model.bean;
+package com.example.xheng.welfaresociety.bean;
 
 import java.io.Serializable;
 import java.util.Arrays;

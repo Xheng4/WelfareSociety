@@ -1,4 +1,4 @@
-package cn.ucai.fulicenter.model.bean;
+package com.example.xheng.welfaresociety.bean;
 
 public class MessageBean {
 
