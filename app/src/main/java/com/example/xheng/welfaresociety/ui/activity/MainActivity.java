@@ -9,6 +9,7 @@ import com.example.xheng.welfaresociety.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,15 +23,23 @@ public class MainActivity extends AppCompatActivity {
     RadioButton mrbCart;
     @BindView(R.id.rb_personal_center)
     RadioButton mrbPersonalCenter;
-
+    Unbinder unbinder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
     }
 
     public void onCheckedChange(View view) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
     }
 }
