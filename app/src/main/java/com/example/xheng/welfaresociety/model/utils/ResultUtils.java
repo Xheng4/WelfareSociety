@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -179,6 +180,11 @@ public class ResultUtils {
             e.printStackTrace();
         }
         return  null;
+    }
+    public static  <T>  ArrayList<T> array2List(T[] array) {
+        List<T> list = Arrays.asList(array);
+        ArrayList<T> arrayList = new ArrayList<>(list);
+        return arrayList;
     }
 
 }
