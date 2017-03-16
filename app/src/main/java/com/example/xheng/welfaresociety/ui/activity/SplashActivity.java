@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.xheng.welfaresociety.R;
+import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
 public class SplashActivity extends AppCompatActivity {
     TextView tvSecond;
@@ -26,8 +27,8 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                SplashActivity.this.finish();
+                MFGT.gotoMain(SplashActivity.this);
+                MFGT.finish(SplashActivity.this);
             }
         },3000);
     }
