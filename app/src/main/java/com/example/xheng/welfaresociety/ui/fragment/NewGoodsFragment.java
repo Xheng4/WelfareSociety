@@ -71,6 +71,16 @@ public class NewGoodsFragment extends Fragment {
                 getResources().getColor(R.color.google_red),
                 getResources().getColor(R.color.google_yellow));
         mManager = new GridLayoutManager(getContext(), I.COLUM_NUM);
+        //增加判断优化页脚 居中
+        mManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position == mList.size()) {
+                    return I.COLUM_NUM;
+                }
+                return 1;
+            }
+        });
         mRecyclerView.setLayoutManager(mManager);
         mRecyclerView.setHasFixedSize(true);//自动修正大小
         mList = new ArrayList<>();
