@@ -1,5 +1,6 @@
 package com.example.xheng.welfaresociety.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -15,6 +16,7 @@ import com.example.xheng.welfaresociety.model.bean.NewGoodsBean;
 import com.example.xheng.welfaresociety.model.net.INewGoodsModel;
 import com.example.xheng.welfaresociety.model.net.NewGoodsModel;
 import com.example.xheng.welfaresociety.model.utils.ImageLoader;
+import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
 import java.util.ArrayList;
 
@@ -65,13 +67,14 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return;
         }
         GoodsViewHolder viewHolder = (GoodsViewHolder) holder;
-        NewGoodsBean bean = mList.get(position);
+        final NewGoodsBean bean = mList.get(position);
         viewHolder.mTvName.setText(bean.getGoodsName());
         viewHolder.mTvPrice.setText(bean.getShopPrice());
         ImageLoader.downloadImg(context, viewHolder.mIvGoods, bean.getGoodsThumb());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MFGT.gotoDesc(context,bean.getGoodsId());
             }
         });
     }

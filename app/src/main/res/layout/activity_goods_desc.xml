@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.xheng.welfaresociety.ui.activity.GoodsDescActivity">
+    <RelativeLayout
+        android:id="@+id/rl_gd_tilte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/back"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:maxLines="1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="aaaaa"
+            android:textSize="25sp"/>
+    </RelativeLayout>
+<LinearLayout
+    android:layout_below="@+id/rl_gd_tilte"
+    android:padding="5dp"
+    android:layout_marginLeft="50dp"
+    android:id="@+id/ll_goodsdesc"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tv_goodsdesc_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/tv_goodsdesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="aaaaaaaaaaaaaa"
+        android:textSize="20sp"/>
+</LinearLayout>
+    <LinearLayout
+        android:layout_below="@+id/rl_gd_tilte"
+        android:padding="5dp"
+        android:layout_marginLeft="80dp"
+        android:id="@+id/ll_goods_price"
+        android:layout_toRightOf="@+id/ll_goodsdesc"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="￥150"
+            android:textSize="20sp"
+            android:id="@+id/tv_goods_desc_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:textSize="20sp"
+            android:text="￥150"
+            android:id="@+id/tv_goods_desc_price2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_loop_view"
+        android:layout_below="@+id/ll_goods_price"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+
+    <cn.ucai.fulicenter.ui.view.SlideAutoLoopView
+        android:id="@+id/salv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/good_detail_bg_white" />
+
+    <cn.ucai.fulicenter.ui.view.FlowIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:count="4"
+        app:focus="0"
+        app:focus_color="@color/good_detaul_flow_indicator_focus"
+        app:normal_color="#a1d1d1d1"
+        app:r="5dp"
+        app:space="3dp" />
+
+
+</LinearLayout>
+    <WebView
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/ll_loop_view"
+        android:id="@+id/wv_goods_desc"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+</RelativeLayout>
