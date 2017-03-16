@@ -7,6 +7,7 @@
     tools:context="com.example.xheng.welfaresociety.ui.activity.MainActivity">
 
     <RadioGroup
+        android:id="@+id/rg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -52,5 +53,9 @@
             android:drawableTop="@drawable/selector_menu_item_personal_center"
             android:text="个人中心" />
     </RadioGroup>
-
+<FrameLayout
+    android:id="@+id/frame_layout"
+    android:layout_above="@+id/rg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
 </RelativeLayout>
