@@ -77,12 +77,12 @@ public class OkHttpUtils<T> {
                 if (mOkHttpClient == null) {
                     mBuilder = new OkHttpClient.Builder();
                     //获取sd卡的缓存文件夹
-//                    File cacheDir = context.getExternalCacheDir();
+                    File cacheDir = context.getExternalCacheDir();
                     mOkHttpClient = mBuilder
                             .connectTimeout(10, TimeUnit.SECONDS)
                             .writeTimeout(20,TimeUnit.SECONDS)
                             .readTimeout(10,TimeUnit.SECONDS)
-//                            .cache(new Cache(cacheDir,10*(1<<20)))//设置缓存位置和缓存大小
+                            .cache(new Cache(cacheDir,10*(1<<20)))//设置缓存位置和缓存大小
                             .build();
                 }
             }

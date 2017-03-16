@@ -61,12 +61,16 @@ public class NewGoodsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_new_goods, container, false);
         bind = ButterKnife.bind(this, view);
         initView();
-//        ButterKnife.bind(this, view);
         return view;
     }
 
     private void initView() {
-        mManager = new GridLayoutManager(getActivity(), I.COLUM_NUM);
+        mSwipeRefresh.setColorSchemeColors(
+                getResources().getColor(R.color.google_blue),
+                getResources().getColor(R.color.google_green),
+                getResources().getColor(R.color.google_red),
+                getResources().getColor(R.color.google_yellow));
+        mManager = new GridLayoutManager(getContext(), I.COLUM_NUM);
         mRecyclerView.setLayoutManager(mManager);
         mRecyclerView.setHasFixedSize(true);//自动修正大小
         mList = new ArrayList<>();
@@ -79,28 +83,77 @@ public class NewGoodsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         newGoodsModel = new NewGoodsModel();
-        initData();
+        initData(I.ACTION_DOWNLOAD);
+        setListener();
     }
 
-    private void initData() {
+    private void setListener() {
+        refreshListener();
+        footerListener();
+    }
+
+    private void footerListener() {
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int lastPosition = mManager.findLastVisibleItemPosition();
+                if (mRecyclerView.SCROLL_STATE_IDLE == newState
+                        && mAdapter.isMore()
+                        && lastPosition == mAdapter.getItemCount() - 1) {
+                    mPageID++;
+                    initData(I.ACTION_PULL_UP);
+                }
+
+            }
+        });
+    }
+
+    private void refreshListener() {
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                isRefresh(true);
+                mPageID = 1;
+                initData(I.ACTION_PULL_DOWN);
+            }
+        });
+    }
+
+    private void initData(final int action) {
         newGoodsModel.loadData(getActivity(), mPageID, new OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 L.e(TAG, "onSuccess() result:" + result);
+                isRefresh(false);
+                mAdapter.setMore(true);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list = ResultUtils.array2List(result);
-                    mList.clear();
+                    if (action == I.ACTION_DOWNLOAD || action == I.ACTION_PULL_DOWN) {
+                        mList.clear();
+                    }
                     mList.addAll(list);
-                    mAdapter.notifyDataSetChanged();
+
+
+                    //如果新加载的一列不足十个 设置false
+                    if (list.size() < I.PAGE_SIZE_DEFAULT) {
+                        mAdapter.setMore(false);
+                    }
                 }
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onError(String error) {
                 L.e(TAG, "onSuccess() error:" + error);
-
+                isRefresh(false);
             }
         });
+    }
+
+    private void isRefresh(boolean isRefresh) {
+        mSwipeRefresh.setRefreshing(isRefresh);
+        mTvRefresh.setVisibility(isRefresh ? View.VISIBLE : View.GONE);
     }
 
     @Override
