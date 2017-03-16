@@ -9,5 +9,5 @@ import com.example.xheng.welfaresociety.model.bean.NewGoodsBean;
  */
 
 public interface INewGoodsModel {
-    void loadData(Context context,int pageID,OnCompleteListener<NewGoodsBean[]> listener);
+    void loadData(Context context,int catID,int pageID,OnCompleteListener<NewGoodsBean[]> listener);
 }

@@ -48,7 +48,7 @@ public class NewGoodsFragment extends Fragment {
     GridLayoutManager mManager;
     NewGoodsAdapter mAdapter;
     ArrayList<NewGoodsBean> mList;
-
+    int catID = 0;
 
     public NewGoodsFragment() {
         // Required empty public constructor
@@ -93,6 +93,7 @@ public class NewGoodsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         newGoodsModel = new NewGoodsModel();
+        catID = getActivity().getIntent().getIntExtra(I.NewAndBoutiqueGoods.CAT_ID, catID);
         initData(I.ACTION_DOWNLOAD);
         setListener();
     }
@@ -131,7 +132,7 @@ public class NewGoodsFragment extends Fragment {
     }
 
     private void initData(final int action) {
-        newGoodsModel.loadData(getActivity(), mPageID, new OnCompleteListener<NewGoodsBean[]>() {
+        newGoodsModel.loadData(getActivity(),catID, mPageID, new OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 L.e(TAG, "onSuccess() result:" + result);

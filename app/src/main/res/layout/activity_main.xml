@@ -17,7 +17,7 @@
             android:id="@+id/rb_new_goods"
             style="@style/menu_item_style"
             android:button="@null"
-            android:checked="false"
+            android:checked="true"
             android:drawableTop="@drawable/selector_menu_item_new_good"
             android:text="新品" />
 

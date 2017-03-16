@@ -69,6 +69,11 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.mTvName.setText(bean.getGoodsName());
         viewHolder.mTvPrice.setText(bean.getShopPrice());
         ImageLoader.downloadImg(context, viewHolder.mIvGoods, bean.getGoodsThumb());
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
     }
 
     private int getFooterString() {

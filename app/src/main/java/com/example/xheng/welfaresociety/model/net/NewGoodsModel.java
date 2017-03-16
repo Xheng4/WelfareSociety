@@ -13,7 +13,7 @@ import com.example.xheng.welfaresociety.model.utils.OkHttpUtils;
 public class NewGoodsModel implements INewGoodsModel {
 
     @Override
-    public void loadData(Context context, int pageID, OnCompleteListener<NewGoodsBean[]> listener) {
+    public void loadData(Context context,int catID, int pageID, OnCompleteListener<NewGoodsBean[]> listener) {
         OkHttpUtils<NewGoodsBean[]> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
                 .addParam(I.NewAndBoutiqueGoods.CAT_ID, String.valueOf(I.CAT_ID))
