@@ -3,6 +3,7 @@ package com.example.xheng.welfaresociety.model.utils;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import com.example.xheng.welfaresociety.application.FuLiApplication;
 import com.example.xheng.welfaresociety.application.I;
@@ -76,12 +77,12 @@ public class OkHttpUtils<T> {
                 if (mOkHttpClient == null) {
                     mBuilder = new OkHttpClient.Builder();
                     //获取sd卡的缓存文件夹
-                    File cacheDir = context.getExternalCacheDir();
+//                    File cacheDir = context.getExternalCacheDir();
                     mOkHttpClient = mBuilder
                             .connectTimeout(10, TimeUnit.SECONDS)
                             .writeTimeout(20,TimeUnit.SECONDS)
                             .readTimeout(10,TimeUnit.SECONDS)
-                            .cache(new Cache(cacheDir,10*(1<<20)))//设置缓存位置和缓存大小
+//                            .cache(new Cache(cacheDir,10*(1<<20)))//设置缓存位置和缓存大小
                             .build();
                 }
             }
@@ -336,6 +337,8 @@ public class OkHttpUtils<T> {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+
+                Log.d("mingYue", "onFailure: " + e.getMessage());
                 Message msg = Message.obtain();
                 msg.what = RESULT_ERROR;
                 msg.obj = e.getMessage();
@@ -344,6 +347,8 @@ public class OkHttpUtils<T> {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+
+//                Log.d("mingYue", "onResponse: " + response.body().string());
                 String json = response.body().string();
                 if(mClazz.equals(String.class)){
                     Message msg = Message.obtain();
