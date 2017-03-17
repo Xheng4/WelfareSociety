@@ -30,7 +30,7 @@
 <LinearLayout
     android:layout_below="@+id/rl_gd_tilte"
     android:padding="5dp"
-    android:layout_marginLeft="50dp"
+    android:layout_marginLeft="30dp"
     android:id="@+id/ll_goodsdesc"
     android:orientation="vertical"
     android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
     <LinearLayout
         android:layout_below="@+id/rl_gd_tilte"
         android:padding="5dp"
-        android:layout_marginLeft="80dp"
+        android:layout_marginLeft="60dp"
         android:id="@+id/ll_goods_price"
         android:layout_toRightOf="@+id/ll_goodsdesc"
         android:orientation="vertical"
@@ -60,14 +60,16 @@
         android:layout_height="wrap_content">
         <TextView
             android:text="￥150"
-            android:textSize="20sp"
+            android:textSize="15sp"
+            android:maxLines="1"
             android:id="@+id/tv_goods_desc_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:text="￥150"
+            android:maxLines="1"
             android:id="@+id/tv_goods_desc_price2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
@@ -80,13 +82,13 @@
         android:layout_height="300dp">
 
 
-    <cn.ucai.fulicenter.ui.view.SlideAutoLoopView
+    <com.example.xheng.welfaresociety.ui.widget.SlideAutoLoopView
         android:id="@+id/salv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/good_detail_bg_white" />
 
-    <cn.ucai.fulicenter.ui.view.FlowIndicator
+    <com.example.xheng.welfaresociety.ui.widget.FlowIndicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
