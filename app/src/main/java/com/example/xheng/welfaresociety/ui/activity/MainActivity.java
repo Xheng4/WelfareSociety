@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 
 import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.ui.fragment.BoutiqueFragment;
+import com.example.xheng.welfaresociety.ui.fragment.CategoryFragment;
 import com.example.xheng.welfaresociety.ui.fragment.NewGoodsFragment;
 
 import butterknife.BindView;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     int index = 0;
     int oldIndex = 0;
     Fragment[] mFragments;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,16 +43,18 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.frame_layout, mFragments[0])
                 .add(R.id.frame_layout, mFragments[1])
+                .add(R.id.frame_layout, mFragments[2])
                 .hide(mFragments[1])
+                .hide(mFragments[2])
                 .show(mFragments[0])
                 .commit();
     }
 
     private void initFragment() {
-        mFragments = new Fragment[2];
+        mFragments = new Fragment[3];
         mFragments[0] = new NewGoodsFragment();
         mFragments[1] = new BoutiqueFragment();
-//        mFragments[2] = new BoutiqueFragment();
+        mFragments[2] = new CategoryFragment();
 //        mFragments[3] = new BoutiqueFragment();
 //        mFragments[4] = new BoutiqueFragment();
     }
@@ -62,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.rb_boutique:
                 index = 1;
+                break;
+            case R.id.rb_category:
+                index = 2;
                 break;
         }
         setTransaction();
