@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,6 +95,7 @@ public class NewGoodsFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         newGoodsModel = new NewGoodsModel();
         catID = getActivity().getIntent().getIntExtra(I.NewAndBoutiqueGoods.CAT_ID, catID);
+        Log.e("catID", "" + catID);
         initData(I.ACTION_DOWNLOAD);
         setListener();
     }
@@ -135,7 +137,8 @@ public class NewGoodsFragment extends Fragment {
         newGoodsModel.loadData(getActivity(),catID, mPageID, new OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
-                L.e(TAG, "onSuccess() result:" + result);
+                Log.e("catID", "" + catID);
+                Log.e("catID", "onSuccess() result:" + result.length);
                 isRefresh(false);
                 mAdapter.setMore(true);
                 if (result != null && result.length > 0) {
@@ -144,8 +147,6 @@ public class NewGoodsFragment extends Fragment {
                         mList.clear();
                     }
                     mList.addAll(list);
-
-
                     //如果新加载的一列不足十个 设置false
                     if (list.size() < I.PAGE_SIZE_DEFAULT) {
                         mAdapter.setMore(false);
@@ -156,7 +157,7 @@ public class NewGoodsFragment extends Fragment {
 
             @Override
             public void onError(String error) {
-                L.e(TAG, "onSuccess() error:" + error);
+                Log.e("catID", " error:" + error);
                 isRefresh(false);
             }
         });
@@ -173,5 +174,9 @@ public class NewGoodsFragment extends Fragment {
         if (bind != null) {
             bind.unbind();
         }
+    }
+
+    public void setSort(int sortBy) {
+        mAdapter.setSortBy(sortBy);
     }
 }

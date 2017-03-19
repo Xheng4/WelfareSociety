@@ -19,6 +19,8 @@ import com.example.xheng.welfaresociety.model.utils.ImageLoader;
 import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +34,42 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     ArrayList<NewGoodsBean> mList;
     INewGoodsModel model;
     boolean isMore;
+
+    int sortBy = I.SORT_BY_ADDTIME_DESC;
+
+    public void setSortBy(int sortBy) {
+        this.sortBy = sortBy;
+        sortBy();
+    }
+
+    private int getPrice(String pri) {
+        return Integer.valueOf(pri.substring(pri.indexOf("￥") + 0));
+    }
+
+    private void sortBy() {
+        Collections.sort(mList, new Comparator<NewGoodsBean>() {
+            @Override
+            public int compare(NewGoodsBean a, NewGoodsBean z) {
+                int result = 0;
+                switch (sortBy) {
+                    case I.SORT_BY_ADDTIME_ASC:
+                        result = (int) (a.getAddTime() - z.getAddTime());
+                        break;
+                    case I.SORT_BY_ADDTIME_DESC:
+                        result = (int) (z.getAddTime() - a.getAddTime());
+                        break;
+                    case I.SORT_BY_PRICE_ASC:
+                        result = getPrice(a.getCurrencyPrice()) - getPrice(z.getCurrencyPrice());
+                        break;
+                    case I.SORT_BY_PRICE_DESC:
+                        result = getPrice(z.getCurrencyPrice()) - getPrice(a.getCurrencyPrice());
+                        break;
+                }
+                return result;
+            }
+        });
+        notifyDataSetChanged();
+    }
 
     public boolean isMore() {
         return isMore;
@@ -90,7 +128,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemViewType(int position) {
-        Log.e("position", "+++" + position);
+//        Log.e("position", "+++" + position);
         if (getItemCount() - 1 == position) {
             return I.TYPE_FOOTER;
         }

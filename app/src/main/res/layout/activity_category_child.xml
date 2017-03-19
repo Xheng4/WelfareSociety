@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.xheng.welfaresociety.ui.activity.CategoryChildActivity">
+
+    <RelativeLayout
+        android:background="@color/good_detail_title_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/back"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:maxLines="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="#fff"
+            android:text="aaaaa"
+            android:drawableRight="@drawable/arrow2_up"
+            android:textSize="25sp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:background="@drawable/btn_bg_orange"
+            android:id="@+id/tv_select_price"
+            android:text="价格"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:drawableRight="@drawable/arrow_order_up"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/tv_select_time"
+            android:text="时间"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:drawableRight="@drawable/arrow_order_up"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg_orange"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fragment_cc"
+        android:layout_below="@+id/rl_bc_tilte"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

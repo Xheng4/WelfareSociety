@@ -12,6 +12,7 @@ import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.model.bean.CategoryChildBean;
 import com.example.xheng.welfaresociety.model.bean.CategoryGroupBean;
 import com.example.xheng.welfaresociety.model.utils.ImageLoader;
+import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
 import java.util.ArrayList;
 
@@ -89,6 +90,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        final CategoryChildBean bean = getChild(groupPosition, childPosition);
         ChildViewHolder holder = null;
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.item_category_child, null);
@@ -98,9 +100,15 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             holder = (ChildViewHolder) convertView.getTag();
         }
         Log.e("getChildId()", "groupPosition:" + groupPosition + ",childPosition" + childPosition);
-        holder.mTvCategoryChild.setText(getChild(groupPosition,childPosition).getName());
+        holder.mTvCategoryChild.setText(bean.getName());
         ImageLoader.downloadImg(context,holder.mIvCategoryChild,
-                getChild(groupPosition, childPosition).getImageUrl());
+                bean.getImageUrl());
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MFGT.gotoCateChild(context, bean.getId(), bean.getName());
+            }
+        });
         return convertView;
     }
 

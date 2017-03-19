@@ -7,6 +7,7 @@ import android.content.Intent;
 import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.ui.activity.BoutiqueChildActivity;
+import com.example.xheng.welfaresociety.ui.activity.CategoryChildActivity;
 import com.example.xheng.welfaresociety.ui.activity.GoodsDescActivity;
 import com.example.xheng.welfaresociety.ui.activity.MainActivity;
 
@@ -42,5 +43,11 @@ public class MFGT {
     public static void gotoDesc(Context activity, int id) {
         startActivity((Activity) activity,new Intent(activity,GoodsDescActivity.class)
                 .putExtra(I.Goods.KEY_GOODS_ID,id));
+    }
+
+    public static void gotoCateChild(Context context, int id, String name) {
+        startActivity((Activity) context, new Intent(context, CategoryChildActivity.class)
+                .putExtra(I.NewAndBoutiqueGoods.CAT_ID, id)
+                .putExtra(I.CategoryChild.NAME, name));
     }
 }

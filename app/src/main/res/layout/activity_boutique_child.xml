@@ -8,6 +8,7 @@
     tools:context="com.example.xheng.welfaresociety.ui.activity.BoutiqueChildActivity">
 
     <RelativeLayout
+        android:background="@color/good_detail_title_bg"
         android:id="@+id/rl_bc_tilte"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
