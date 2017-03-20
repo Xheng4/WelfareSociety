@@ -9,9 +9,14 @@ import android.view.View;
 import android.widget.RadioButton;
 
 import com.example.xheng.welfaresociety.R;
+import com.example.xheng.welfaresociety.application.FuLiApplication;
+import com.example.xheng.welfaresociety.model.bean.User;
 import com.example.xheng.welfaresociety.ui.fragment.BoutiqueFragment;
+import com.example.xheng.welfaresociety.ui.fragment.CartFragment;
 import com.example.xheng.welfaresociety.ui.fragment.CategoryFragment;
 import com.example.xheng.welfaresociety.ui.fragment.NewGoodsFragment;
+import com.example.xheng.welfaresociety.ui.fragment.PersonalFragment;
+import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,13 +38,16 @@ public class MainActivity extends AppCompatActivity {
     int index = 0;
     int oldIndex = 0;
     Fragment[] mFragments;
-
+    RadioButton[] mRadioButtons;
+    User mUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
+
         initFragment();
+        initRadioButton();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.frame_layout, mFragments[0])
                 .add(R.id.frame_layout, mFragments[1])
@@ -50,13 +58,23 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    private void initRadioButton() {
+        mRadioButtons = new RadioButton[5];
+        mRadioButtons[0] = (RadioButton) findViewById(R.id.rb_new_goods);
+        mRadioButtons[1] = (RadioButton) findViewById(R.id.rb_boutique);
+        mRadioButtons[2] = (RadioButton) findViewById(R.id.rb_category);
+        mRadioButtons[3] = (RadioButton) findViewById(R.id.rb_cart);
+        mRadioButtons[4] = (RadioButton) findViewById(R.id.rb_personal_center);
+    }
+
+
     private void initFragment() {
-        mFragments = new Fragment[3];
+        mFragments = new Fragment[5];
         mFragments[0] = new NewGoodsFragment();
         mFragments[1] = new BoutiqueFragment();
         mFragments[2] = new CategoryFragment();
-//        mFragments[3] = new BoutiqueFragment();
-//        mFragments[4] = new BoutiqueFragment();
+        mFragments[3] = new CartFragment();
+        mFragments[4] = new PersonalFragment();
     }
 
     public void onCheckedChange(View view) {
@@ -70,6 +88,22 @@ public class MainActivity extends AppCompatActivity {
             case R.id.rb_category:
                 index = 2;
                 break;
+            case R.id.rb_cart:
+                mUser = FuLiApplication.getUser();
+                if (mUser == null) {
+                    MFGT.gotoLogin(MainActivity.this);
+                    return;
+                }
+                index = 3;
+                break;
+            case R.id.rb_personal_center:
+                mUser = FuLiApplication.getUser();
+                if (mUser == null) {
+                    MFGT.gotoLogin(MainActivity.this);
+                    return;
+                }
+                index = 4;
+                break;
         }
         setTransaction();
     }
@@ -81,6 +115,20 @@ public class MainActivity extends AppCompatActivity {
                     .show(mFragments[index])
                     .commit();
             oldIndex = index;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setRadioButton();
+    }
+
+    private void setRadioButton() {
+        for (int i = 0; i < mRadioButtons.length; i++) {
+            if (i == oldIndex) {
+                mRadioButtons[i].setChecked(true);
+            }
         }
     }
 
