@@ -53,7 +53,7 @@ public class CategoryChildActivity extends AppCompatActivity {
             case R.id.tv_select_price:
                 sortBy = sortPrice ? I.SORT_BY_PRICE_DESC : I.SORT_BY_PRICE_ASC;
                 sortPrice = !sortPrice;
-                mTvSelectPrice.
+
                 break;
             case R.id.tv_select_time:
                 sortBy = sortTime ? I.SORT_BY_ADDTIME_DESC : I.SORT_BY_ADDTIME_ASC;
@@ -61,5 +61,10 @@ public class CategoryChildActivity extends AppCompatActivity {
                 break;
         }
         mNewGoodsFragment.setSort(sortBy);
+    }
+
+    @OnClick(R.id.textView)
+    public void onPopwindow() {
+
     }
 }

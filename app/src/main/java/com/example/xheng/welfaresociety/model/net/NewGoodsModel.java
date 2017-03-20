@@ -21,7 +21,7 @@ public class NewGoodsModel implements INewGoodsModel {
         Log.e("catID", "pageID：" + pageID);
         OkHttpUtils<NewGoodsBean[]> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(url)
-                .addParam(I.NewAndBoutiqueGoods.CAT_ID, String.valueOf(I.CAT_ID))
+                .addParam(I.NewAndBoutiqueGoods.CAT_ID, String.valueOf(catID))
                 .addParam(I.PAGE_ID, String.valueOf(pageID))
                 .addParam(I.PAGE_SIZE, String.valueOf(I.PAGE_SIZE_DEFAULT))
                 .targetClass(NewGoodsBean[].class)

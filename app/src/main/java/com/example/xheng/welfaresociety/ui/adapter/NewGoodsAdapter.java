@@ -43,7 +43,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private int getPrice(String pri) {
-        return Integer.valueOf(pri.substring(pri.indexOf("￥") + 0));
+        return Integer.valueOf(pri.substring(pri.indexOf("￥") + 1));
     }
 
     private void sortBy() {
