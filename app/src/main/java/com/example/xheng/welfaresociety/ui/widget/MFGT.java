@@ -9,7 +9,9 @@ import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.ui.activity.BoutiqueChildActivity;
 import com.example.xheng.welfaresociety.ui.activity.CategoryChildActivity;
 import com.example.xheng.welfaresociety.ui.activity.GoodsDescActivity;
+import com.example.xheng.welfaresociety.ui.activity.LoginActivity;
 import com.example.xheng.welfaresociety.ui.activity.MainActivity;
+import com.example.xheng.welfaresociety.ui.activity.RegisterActivity;
 
 /**
  * Created by xheng on 2017/3/16.
@@ -19,6 +21,11 @@ public class MFGT {
     public static void startActivity(Activity activity, Class cla) {
         activity.startActivity(new Intent(activity,cla));
         activity.overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+    }
+
+    public static void startActivityForResult(Activity activity, Intent intent, int requestCode) {
+        activity.startActivityForResult(intent, requestCode);
+        activity.overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
     }
 
     public static void startActivity(Activity activity, Intent intent) {
@@ -50,4 +57,14 @@ public class MFGT {
                 .putExtra(I.NewAndBoutiqueGoods.CAT_ID, id)
                 .putExtra(I.CategoryChild.NAME, name));
     }
+
+    public static void gotoRegister(Activity activity) {
+        startActivity(activity, RegisterActivity.class);
+        startActivityForResult(activity, new Intent(activity, RegisterActivity.class), I.REQUEST_CODE_REGISTER);
+    }
+
+    public static void gotoLogin(Activity activity) {
+        startActivity(activity, LoginActivity.class);
+    }
+
 }
