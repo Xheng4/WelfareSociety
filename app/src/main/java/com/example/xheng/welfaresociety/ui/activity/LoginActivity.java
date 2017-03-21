@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -12,6 +13,7 @@ import com.example.xheng.welfaresociety.application.FuLiApplication;
 import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.model.bean.Result;
 import com.example.xheng.welfaresociety.model.bean.User;
+import com.example.xheng.welfaresociety.model.dao.DBUser;
 import com.example.xheng.welfaresociety.model.net.IUserModel;
 import com.example.xheng.welfaresociety.model.net.OnCompleteListener;
 import com.example.xheng.welfaresociety.model.net.UserModel;
@@ -68,8 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (res.isRetMsg()) {
                         User user = (User) res.getRetData();
                         if (user != null) {
-                            FuLiApplication.setUser(user);
-                            loginSuccess();
+                            loginSuccess(user);
                         }
                     } else {
                         if (res.getRetCode() == I.MSG_LOGIN_UNKNOW_USER) {
@@ -89,9 +90,17 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void loginSuccess() {
-        SharedPreferencesUtils utils = new SharedPreferencesUtils();
-        utils.setUserName(userName);
+    private void loginSuccess(final User user) {
+        Log.d("user", "loginSuccess" + user);
+        FuLiApplication.setUser(user);
+        SharedPreferencesUtils.getmUtils().setUserName(user.getMuserName());
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean info = DBUser.getInstance(LoginActivity.this).saveUserInfo(user);
+                Log.d("user", "boolean info=" + info);
+            }
+        }).start();
         MFGT.finish(LoginActivity.this);
     }
 
