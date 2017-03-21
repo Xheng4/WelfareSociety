@@ -83,11 +83,11 @@ public class NewGoodsFragment extends Fragment {
             }
         });
         mRecyclerView.setLayoutManager(mManager);
-        mRecyclerView.setHasFixedSize(true);//自动修正大小
         mList = new ArrayList<>();
         mAdapter = new NewGoodsAdapter(getActivity(), mList);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(new SpaceItemDecoration(12));
+        mRecyclerView.setHasFixedSize(true);//自动修正大小
+        mRecyclerView.addItemDecoration(new SpaceItemDecoration(20));
     }
 
     @Override
