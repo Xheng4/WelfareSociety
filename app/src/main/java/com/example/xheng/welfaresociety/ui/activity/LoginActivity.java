@@ -18,6 +18,7 @@ import com.example.xheng.welfaresociety.model.net.UserModel;
 import com.example.xheng.welfaresociety.model.utils.CommonUtils;
 import com.example.xheng.welfaresociety.model.utils.MD5;
 import com.example.xheng.welfaresociety.model.utils.ResultUtils;
+import com.example.xheng.welfaresociety.model.utils.SharedPreferencesUtils;
 import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
 import butterknife.BindView;
@@ -89,6 +90,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginSuccess() {
+        SharedPreferencesUtils utils = new SharedPreferencesUtils();
+        utils.setUserName(userName);
         MFGT.finish(LoginActivity.this);
     }
 
