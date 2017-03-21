@@ -38,7 +38,6 @@ public class OpenHelperDB extends SQLiteOpenHelper {
         return "com.example.xheng.welfaresociety.db";
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_USER_DATABASE);
