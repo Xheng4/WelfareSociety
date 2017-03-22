@@ -36,6 +36,7 @@
         </RelativeLayout>
 
         <ImageView
+            android:src="@drawable/nopic"
             android:id="@+id/iv_personal_avatar"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -99,6 +100,7 @@
         android:layout_centerHorizontal="true"
         android:background="@color/btn_logout_pressed"
         android:text="退出用户"
+        android:layout_marginBottom="20dp"
         android:layout_width="270dp"
         android:layout_height="wrap_content"/>
 </RelativeLayout>

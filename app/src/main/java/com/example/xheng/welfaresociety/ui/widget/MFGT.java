@@ -13,6 +13,7 @@ import com.example.xheng.welfaresociety.ui.activity.LoginActivity;
 import com.example.xheng.welfaresociety.ui.activity.MainActivity;
 import com.example.xheng.welfaresociety.ui.activity.RegisterActivity;
 import com.example.xheng.welfaresociety.ui.activity.SettingsActivity;
+import com.example.xheng.welfaresociety.ui.activity.SettingsAvatar;
 import com.example.xheng.welfaresociety.ui.activity.UpdateNickActivity;
 
 /**
@@ -75,5 +76,9 @@ public class MFGT {
 
     public static void gotoUpdateNick(Activity activity) {
         startActivity(activity, UpdateNickActivity.class);
+    }
+
+    public static void gotoAvatar(Activity activity) {
+        startActivity(activity, SettingsAvatar.class);
     }
 }

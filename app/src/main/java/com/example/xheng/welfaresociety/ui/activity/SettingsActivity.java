@@ -10,14 +10,10 @@ import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.application.FuLiApplication;
 import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.model.bean.User;
-import com.example.xheng.welfaresociety.model.dao.DBManager;
 import com.example.xheng.welfaresociety.model.dao.DBUser;
 import com.example.xheng.welfaresociety.model.utils.CommonUtils;
 import com.example.xheng.welfaresociety.model.utils.L;
-import com.example.xheng.welfaresociety.model.utils.SharedPreferencesUtils;
 import com.example.xheng.welfaresociety.ui.widget.MFGT;
-
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +49,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-    @OnClick({R.id.rl_pc_username, R.id.btn_personal_logout, R.id.rl_pc_nick, R.id.iv_title_back})
+    @OnClick({R.id.rl_pc_username,
+            R.id.btn_personal_logout,
+            R.id.rl_pc_nick,
+            R.id.iv_title_back,
+            R.id.iv_personal_avatar})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_pc_username:
@@ -69,6 +69,9 @@ public class SettingsActivity extends AppCompatActivity {
             case R.id.iv_title_back:
                 MFGT.finish(SettingsActivity.this);
                 break;
+            case R.id.iv_personal_avatar:
+                MFGT.gotoAvatar(SettingsActivity.this);
+                break;
         }
     }
 
@@ -83,5 +86,9 @@ public class SettingsActivity extends AppCompatActivity {
         super.onResume();
         user = null;
         initData();
+    }
+
+    @OnClick()
+    public void onClick() {
     }
 }

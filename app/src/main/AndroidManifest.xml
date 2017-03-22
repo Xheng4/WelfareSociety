@@ -3,6 +3,8 @@
           package="com.example.xheng.welfaresociety">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".application.FuLiApplication"
@@ -33,6 +35,8 @@
         <activity android:name=".ui.activity.SettingsActivity">
         </activity>
         <activity android:name=".ui.activity.UpdateNickActivity">
+        </activity>
+        <activity android:name=".ui.activity.SettingsAvatar">
         </activity>
     </application>
 
