@@ -12,6 +12,7 @@ import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.model.bean.User;
 import com.example.xheng.welfaresociety.model.dao.DBUser;
 import com.example.xheng.welfaresociety.model.utils.CommonUtils;
+import com.example.xheng.welfaresociety.model.utils.ImageLoader;
 import com.example.xheng.welfaresociety.model.utils.L;
 import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
@@ -44,6 +45,7 @@ public class SettingsActivity extends AppCompatActivity {
             L.e("personal", "SettingsActivity,initData");
             mTvPersonalName.setText(user.getMuserName());
             mTvPersonalNick.setText(user.getMuserNick());
+            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), this, mIvPersonalAvatar);
         }
 
 

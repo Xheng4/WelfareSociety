@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.application.FuLiApplication;
 import com.example.xheng.welfaresociety.model.bean.User;
+import com.example.xheng.welfaresociety.model.utils.ImageLoader;
 import com.example.xheng.welfaresociety.model.utils.L;
 import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
@@ -86,6 +87,7 @@ public class PersonalFragment extends Fragment {
 
     private void showUserInfo() {
         mTvUserName.setText(mUser.getMuserNick());
+        ImageLoader.setAvatar(ImageLoader.getAvatarUrl(mUser), getContext(), mIvUserAvatar);
     }
 
     @OnClick(R.id.tv_user_name)

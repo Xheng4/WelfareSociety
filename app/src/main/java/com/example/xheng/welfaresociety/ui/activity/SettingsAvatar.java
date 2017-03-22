@@ -16,6 +16,7 @@ import com.example.xheng.welfaresociety.model.net.IUserModel;
 import com.example.xheng.welfaresociety.model.net.OnCompleteListener;
 import com.example.xheng.welfaresociety.model.net.UserModel;
 import com.example.xheng.welfaresociety.model.utils.CommonUtils;
+import com.example.xheng.welfaresociety.model.utils.ImageLoader;
 import com.example.xheng.welfaresociety.model.utils.OnSetAvatarListener;
 import com.example.xheng.welfaresociety.model.utils.ResultUtils;
 import com.example.xheng.welfaresociety.ui.widget.MFGT;
@@ -33,7 +34,7 @@ public class SettingsAvatar extends AppCompatActivity {
     @BindView(R.id.iv_settings_avatar)
     ImageView mIvSettingsAvatar;
     String avatarName;
-    User user;
+    User user = FuLiApplication.getUser();
     IUserModel mModel;
 
     @Override
@@ -78,6 +79,7 @@ public class SettingsAvatar extends AppCompatActivity {
             if (requestCode == I.REQUEST_CODE_NICK) {
                 CommonUtils.showShortToast(R.string.update_user_nick_success);
             }
+            Log.e("avatar", "getAvatar");
             if (requestCode == OnSetAvatarListener.REQUEST_CROP_PHOTO) {
                 uploadAvatar();
             }
@@ -87,18 +89,30 @@ public class SettingsAvatar extends AppCompatActivity {
 
     private void uploadAvatar() {
 //        File file =new File( OnSetAvatarListener.getAvatarPath(SettingsAvatar.this,user.getMuserName()));
-        File file = new File(OnSetAvatarListener.getAvatarPath(this, user.getMuserName()));
-        Log.e("avatar", "file:" + file.exists());
-        Log.e("avatar", "filePath:" + file.getAbsolutePath());
+        File file = new File(OnSetAvatarListener.getAvatarPath(this,
+                user.getMavatarPath() + "/" + user.getMuserName() + user.getMavatarSuffix()));
+        Log.e("avatar", "file-:" + file.exists());
+        Log.e("avatar", "filePath-:" + file.getAbsolutePath());
         mModel.uploadAvatar(SettingsAvatar.this, user.getMuserName(), file, new OnCompleteListener<String>() {
             @Override
             public void onSuccess(String result) {
                 Result json = ResultUtils.getResultFromJson(result, User.class);
                 Log.e("avatar", "result onSuccess():" + result.toString());
+                if (json != null) {
+                    if (json.isRetMsg()) {
+                        User data = (User) json.getRetData();
+                        ImageLoader.setAvatar(ImageLoader.getAvatarUrl(data),
+                                SettingsAvatar.this, mIvSettingsAvatar);
+                        CommonUtils.showShortToast(R.string.update_user_avatar_success);
+                    } else {
+                        CommonUtils.showShortToast(R.string.update_user_avatar_fail);
+                    }
+                }
             }
 
             @Override
             public void onError(String error) {
+                CommonUtils.showShortToast(R.string.update_user_avatar_fail);
                 Log.e("avatar", "result onError():" + error);
             }
         });
