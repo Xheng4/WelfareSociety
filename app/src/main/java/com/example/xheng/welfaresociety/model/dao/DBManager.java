@@ -36,7 +36,7 @@ public class DBManager {
             values.put(DBUser.USER_COLUMN_AVATAR_TYPE, user.getMavatarType());
             values.put(DBUser.USER_COLUMN_AVATAR_UPDATE_TIEM, user.getMavatarLastUpdateTime());
 
-            return db.insert(DBUser.USER_TABLE_NAME, null, values) != -1;
+            return db.replace(DBUser.USER_TABLE_NAME, null, values) != -1;
         }
         return false;
     }
@@ -60,5 +60,9 @@ public class DBManager {
             }
         }
         return null;
+    }
+
+    public void closeDB() {
+        mHelper.closeDB();
     }
 }

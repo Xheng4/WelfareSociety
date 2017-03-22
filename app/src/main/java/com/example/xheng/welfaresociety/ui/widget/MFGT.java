@@ -12,6 +12,7 @@ import com.example.xheng.welfaresociety.ui.activity.GoodsDescActivity;
 import com.example.xheng.welfaresociety.ui.activity.LoginActivity;
 import com.example.xheng.welfaresociety.ui.activity.MainActivity;
 import com.example.xheng.welfaresociety.ui.activity.RegisterActivity;
+import com.example.xheng.welfaresociety.ui.activity.SettingsActivity;
 
 /**
  * Created by xheng on 2017/3/16.
@@ -63,8 +64,15 @@ public class MFGT {
         startActivityForResult(activity, new Intent(activity, RegisterActivity.class), I.REQUEST_CODE_REGISTER);
     }
 
-    public static void gotoLogin(Activity activity) {
-        startActivity(activity, LoginActivity.class);
+    public static void gotoLogin(Activity activity, int requestCode) {
+        startActivityForResult(activity, new Intent(activity, LoginActivity.class), requestCode);
     }
 
+    public static void gotoSettings(Activity activity) {
+        startActivity(activity, SettingsActivity.class);
+    }
+
+    public static void gotoUpdateNick(Activity activity) {
+
+    }
 }

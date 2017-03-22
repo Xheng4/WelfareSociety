@@ -10,6 +10,7 @@ import android.widget.RadioButton;
 
 import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.application.FuLiApplication;
+import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.model.bean.User;
 import com.example.xheng.welfaresociety.ui.fragment.BoutiqueFragment;
 import com.example.xheng.welfaresociety.ui.fragment.CartFragment;
@@ -52,8 +53,12 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.frame_layout, mFragments[0])
                 .add(R.id.frame_layout, mFragments[1])
                 .add(R.id.frame_layout, mFragments[2])
+                .add(R.id.frame_layout, mFragments[3])
+                .add(R.id.frame_layout, mFragments[4])
                 .hide(mFragments[1])
                 .hide(mFragments[2])
+                .hide(mFragments[3])
+                .hide(mFragments[4])
                 .show(mFragments[0])
                 .commit();
     }
@@ -91,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.rb_cart:
                 mUser = FuLiApplication.getUser();
                 if (mUser == null) {
-                    MFGT.gotoLogin(MainActivity.this);
+                    MFGT.gotoLogin(MainActivity.this, I.REQUEST_CODE_LOGIN_FROM_CART);
                     return;
                 }
                 index = 3;
@@ -99,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.rb_personal_center:
                 mUser = FuLiApplication.getUser();
                 if (mUser == null) {
-                    MFGT.gotoLogin(MainActivity.this);
+                    MFGT.gotoLogin(MainActivity.this, I.REQUEST_CODE_LOGIN);
                     return;
                 }
                 index = 4;
@@ -121,7 +126,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (index == 4 && FuLiApplication.getUser() == null) {
+            index = 0;
+        }
+        setTransaction();
         setRadioButton();
+
     }
 
     private void setRadioButton() {
@@ -129,6 +139,21 @@ public class MainActivity extends AppCompatActivity {
             if (i == oldIndex) {
                 mRadioButtons[i].setChecked(true);
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == I.REQUEST_CODE_LOGIN) {
+                index = 4;
+            }
+            if (requestCode == I.REQUEST_CODE_LOGIN_FROM_CART) {
+                index = 3;
+            }
+            setTransaction();
+            setRadioButton();
         }
     }
 

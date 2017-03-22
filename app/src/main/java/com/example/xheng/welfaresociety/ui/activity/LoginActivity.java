@@ -101,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("user", "boolean info=" + info);
             }
         }).start();
+        setResult(RESULT_OK);
         MFGT.finish(LoginActivity.this);
     }
 

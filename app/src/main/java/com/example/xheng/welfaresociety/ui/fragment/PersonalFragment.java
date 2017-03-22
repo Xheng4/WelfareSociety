@@ -1,6 +1,7 @@
 package com.example.xheng.welfaresociety.ui.fragment;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,7 @@ public class PersonalFragment extends Fragment {
     TextView mTvCollectCount;
 
     User mUser;
+
     public PersonalFragment() {
         // Required empty public constructor
     }
@@ -65,13 +67,17 @@ public class PersonalFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mUser = FuLiApplication.getUser();
         if (mUser == null) {
-            MFGT.gotoLogin(getActivity());
-        } else {
             showUserInfo();
+
         }
     }
 
     private void showUserInfo() {
+        mTvUserName.setText(mUser.getMuserNick());
+    }
 
+    @OnClick(R.id.tv_user_name)
+    public void onClick() {
+        MFGT.gotoSettings((Activity) getContext());
     }
 }

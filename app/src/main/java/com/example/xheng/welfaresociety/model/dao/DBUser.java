@@ -2,7 +2,9 @@ package com.example.xheng.welfaresociety.model.dao;
 
 import android.content.Context;
 
+import com.example.xheng.welfaresociety.application.FuLiApplication;
 import com.example.xheng.welfaresociety.model.bean.User;
+import com.example.xheng.welfaresociety.model.utils.SharedPreferencesUtils;
 
 /**
  * Created by xheng on 2017/3/21.
@@ -43,5 +45,11 @@ public class DBUser {
         } else {
             return DBManager.getInstance().getUserInfo(userName);
         }
+    }
+
+    public void closeDB() {
+        FuLiApplication.setUser(null);
+        SharedPreferencesUtils.getmUtils().removeUser();
+        DBManager.getInstance().closeDB();
     }
 }
