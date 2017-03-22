@@ -62,7 +62,8 @@ public class SplashActivity extends AppCompatActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            tvSecond.setText("倒计时（"+millisUntilFinished/1000+"）");
+            tvSecond.setTextSize(15);
+            tvSecond.setText("倒计时(" + millisUntilFinished / 1000 + ")");
         }
 
         @Override
