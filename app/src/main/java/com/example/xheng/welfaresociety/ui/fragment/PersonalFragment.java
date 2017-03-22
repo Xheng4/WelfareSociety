@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.application.FuLiApplication;
 import com.example.xheng.welfaresociety.model.bean.User;
+import com.example.xheng.welfaresociety.model.utils.L;
 import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
 import butterknife.BindView;
@@ -24,7 +25,6 @@ import butterknife.OnClick;
  * A simple {@link Fragment} subclass.
  */
 public class PersonalFragment extends Fragment {
-
 
     @BindView(R.id.iv_user_avatar)
     ImageView mIvUserAvatar;
@@ -65,8 +65,20 @@ public class PersonalFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mUser = null;
+        initData();
+    }
+
+    private void initData() {
         mUser = FuLiApplication.getUser();
-        if (mUser == null) {
+        if (mUser != null) {
+            L.e("personal", "PersonalFragment,initData");
             showUserInfo();
 
         }

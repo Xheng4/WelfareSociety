@@ -12,6 +12,8 @@ import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.model.bean.User;
 import com.example.xheng.welfaresociety.model.dao.DBManager;
 import com.example.xheng.welfaresociety.model.dao.DBUser;
+import com.example.xheng.welfaresociety.model.utils.CommonUtils;
+import com.example.xheng.welfaresociety.model.utils.L;
 import com.example.xheng.welfaresociety.model.utils.SharedPreferencesUtils;
 import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
@@ -36,28 +38,36 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
+
         initData();
     }
 
     private void initData() {
+        user = FuLiApplication.getUser();
         if (user != null) {
+            L.e("personal", "SettingsActivity,initData");
             mTvPersonalName.setText(user.getMuserName());
             mTvPersonalNick.setText(user.getMuserNick());
         }
 
+
     }
 
-    @OnClick({R.id.rl_pc_username, R.id.btn_personal_logout, R.id.rl_pc_nick})
+    @OnClick({R.id.rl_pc_username, R.id.btn_personal_logout, R.id.rl_pc_nick, R.id.iv_title_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_pc_username:
-
+                CommonUtils.showShortToast(R.string.username_connot_be_modify);
                 break;
             case R.id.rl_pc_nick:
+                L.e("personal");
                 MFGT.gotoUpdateNick(SettingsActivity.this);
                 break;
             case R.id.btn_personal_logout:
                 onLogout();
+                break;
+            case R.id.iv_title_back:
+                MFGT.finish(SettingsActivity.this);
                 break;
         }
     }
@@ -68,9 +78,10 @@ public class SettingsActivity extends AppCompatActivity {
         MFGT.gotoLogin(SettingsActivity.this, I.REQUEST_CODE_LOGIN);
     }
 
-    @OnClick(R.id.iv_title_back)
-    public void onClick() {
-        MFGT.finish(SettingsActivity.this);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        user = null;
+        initData();
     }
-
 }

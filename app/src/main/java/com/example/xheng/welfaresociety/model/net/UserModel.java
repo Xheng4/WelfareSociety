@@ -32,4 +32,14 @@ public class UserModel implements IUserModel {
                 .targetClass(String.class)
                 .execute(listener);
     }
+
+    @Override
+    public void updateNick(Context context, String userName, String nick, OnCompleteListener<String> listener) {
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_UPDATE_USER_NICK)
+                .addParam(I.User.USER_NAME, userName)
+                .addParam(I.User.NICK, nick)
+                .targetClass(String.class)
+                .execute(listener);
+    }
 }
