@@ -18,6 +18,7 @@ import com.example.xheng.welfaresociety.model.bean.User;
 import com.example.xheng.welfaresociety.model.net.GoodsDescModel;
 import com.example.xheng.welfaresociety.model.net.IGoodsDescModle;
 import com.example.xheng.welfaresociety.model.net.OnCompleteListener;
+import com.example.xheng.welfaresociety.model.utils.AntiShake;
 import com.example.xheng.welfaresociety.model.utils.CommonUtils;
 import com.example.xheng.welfaresociety.ui.widget.FlowIndicator;
 import com.example.xheng.welfaresociety.ui.widget.MFGT;
@@ -51,6 +52,12 @@ public class GoodsDescActivity extends AppCompatActivity {
     ImageView mIvCollect;
     int action = I.ACTION_IS_COLLECT;
     boolean isCollect;
+
+    AntiShake util = new AntiShake();
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -152,6 +159,7 @@ public class GoodsDescActivity extends AppCompatActivity {
                 MFGT.finish(GoodsDescActivity.this);
                 break;
             case R.id.iv_collect:
+                if (util.check(view.getId())) return;
                 User user = FuLiApplication.getUser();
                 if (user == null) {
                     MFGT.gotoLogin(GoodsDescActivity.this, 0);
