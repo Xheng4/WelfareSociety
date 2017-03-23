@@ -11,6 +11,7 @@ import com.example.xheng.welfaresociety.ui.activity.CategoryChildActivity;
 import com.example.xheng.welfaresociety.ui.activity.GoodsDescActivity;
 import com.example.xheng.welfaresociety.ui.activity.LoginActivity;
 import com.example.xheng.welfaresociety.ui.activity.MainActivity;
+import com.example.xheng.welfaresociety.ui.activity.MyCollectActivity;
 import com.example.xheng.welfaresociety.ui.activity.RegisterActivity;
 import com.example.xheng.welfaresociety.ui.activity.SettingsActivity;
 import com.example.xheng.welfaresociety.ui.activity.SettingsAvatar;
@@ -80,5 +81,9 @@ public class MFGT {
 
     public static void gotoAvatar(Activity activity) {
         startActivity(activity, SettingsAvatar.class);
+    }
+
+    public static void gotoMyCollectActivity(Activity activity) {
+        startActivity(activity, MyCollectActivity.class);
     }
 }

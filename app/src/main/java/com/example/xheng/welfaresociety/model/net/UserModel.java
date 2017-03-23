@@ -3,6 +3,7 @@ package com.example.xheng.welfaresociety.model.net;
 import android.content.Context;
 
 import com.example.xheng.welfaresociety.application.I;
+import com.example.xheng.welfaresociety.model.bean.CollectBean;
 import com.example.xheng.welfaresociety.model.bean.MessageBean;
 import com.example.xheng.welfaresociety.model.utils.OkHttpUtils;
 
@@ -64,6 +65,17 @@ public class UserModel implements IUserModel {
         utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
                 .addParam(I.Collect.USER_NAME, userName)
                 .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
+    @Override
+    public void findCollects(Context context, String userName, int pageID, OnCompleteListener<CollectBean[]> listener) {
+        OkHttpUtils<CollectBean[]> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECTS)
+                .addParam(I.Collect.USER_NAME, userName)
+                .addParam(I.PAGE_ID, String.valueOf(pageID))
+                .addParam(I.PAGE_SIZE, String.valueOf(I.PAGE_SIZE_DEFAULT))
+                .targetClass(CollectBean[].class)
                 .execute(listener);
     }
 }

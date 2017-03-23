@@ -15,7 +15,6 @@ import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.application.FuLiApplication;
 import com.example.xheng.welfaresociety.model.bean.MessageBean;
 import com.example.xheng.welfaresociety.model.bean.User;
-import com.example.xheng.welfaresociety.model.net.INewGoodsModel;
 import com.example.xheng.welfaresociety.model.net.IUserModel;
 import com.example.xheng.welfaresociety.model.net.OnCompleteListener;
 import com.example.xheng.welfaresociety.model.net.UserModel;
@@ -58,7 +57,8 @@ public class PersonalFragment extends Fragment {
         return view;
     }
 
-    @OnClick({R.id.iv_persona_center_msg, R.id.tv_center_settings, R.id.center_top})
+    @OnClick({R.id.iv_persona_center_msg, R.id.tv_center_settings,
+            R.id.center_top, R.id.layout_center_collect})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_persona_center_msg:
@@ -66,6 +66,9 @@ public class PersonalFragment extends Fragment {
             case R.id.tv_center_settings:
                 break;
             case R.id.center_top:
+                break;
+            case R.id.layout_center_collect:
+                MFGT.gotoMyCollectActivity((Activity) getContext());
                 break;
         }
     }
@@ -122,4 +125,5 @@ public class PersonalFragment extends Fragment {
     public void onClick() {
         MFGT.gotoSettings((Activity) getContext());
     }
+
 }

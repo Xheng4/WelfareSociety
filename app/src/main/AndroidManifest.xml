@@ -38,6 +38,8 @@
         </activity>
         <activity android:name=".ui.activity.SettingsAvatar">
         </activity>
+        <activity android:name=".ui.activity.MyCollectActivity">
+        </activity>
     </application>
 
 </manifest>

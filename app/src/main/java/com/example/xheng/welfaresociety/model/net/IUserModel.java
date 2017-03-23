@@ -2,6 +2,7 @@ package com.example.xheng.welfaresociety.model.net;
 
 import android.content.Context;
 
+import com.example.xheng.welfaresociety.model.bean.CollectBean;
 import com.example.xheng.welfaresociety.model.bean.MessageBean;
 
 import java.io.File;
@@ -20,5 +21,7 @@ public interface IUserModel {
     void uploadAvatar(Context context, String userName, File file, OnCompleteListener<String> listener);
 
     void CollectCount(Context context, String userName, OnCompleteListener<MessageBean> listener);
+
+    void findCollects(Context context, String userName, int pageID, OnCompleteListener<CollectBean[]> listener);
 
 }
