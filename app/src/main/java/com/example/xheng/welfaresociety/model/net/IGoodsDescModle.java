@@ -13,5 +13,5 @@ import com.example.xheng.welfaresociety.model.bean.MessageBean;
 public interface IGoodsDescModle {
     void loadData(Context context,int goodsId, OnCompleteListener<GoodsDetailsBean> listener);
 
-    void loadCollectStatus(Context context, int goodsId, String userName, OnCompleteListener<MessageBean> listener);
+    void CollectAction(Context context, int action, int goodsId, String userName, OnCompleteListener<MessageBean> listener);
 }

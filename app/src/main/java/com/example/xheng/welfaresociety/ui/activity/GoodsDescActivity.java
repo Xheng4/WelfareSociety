@@ -49,7 +49,8 @@ public class GoodsDescActivity extends AppCompatActivity {
     WebView mWvGoodsDesc;
     @BindView(R.id.iv_collect)
     ImageView mIvCollect;
-
+    int action = I.ACTION_IS_COLLECT;
+    boolean isCollect;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,28 +91,37 @@ public class GoodsDescActivity extends AppCompatActivity {
         mTvGoodsDescPrice2.setText(bean.getShopPrice());
         mSalv.startPlayLoop(mIndicator, getUrl(bean), getCount(bean));
         mWvGoodsDesc.loadDataWithBaseURL(null, bean.getGoodsBrief(), I.TEXT_HTML, I.UTF_8, null);
-        initCollect();
+        action = I.ACTION_IS_COLLECT;
+        initCollect(action, FuLiApplication.getUser());
     }
 
-    private void initCollect() {
-        User user = FuLiApplication.getUser();
-        mModle.loadCollectStatus(GoodsDescActivity.this, goodsID, user.getMuserName(), new OnCompleteListener<MessageBean>() {
+    private void initCollect(final int action, User user) {
+        mModle.CollectAction(GoodsDescActivity.this, action, goodsID, user.getMuserName(), new OnCompleteListener<MessageBean>() {
             @Override
             public void onSuccess(MessageBean result) {
                 if (result != null) {
-                    if (result.isSuccess()) {
-                        mIvCollect.setImageResource(R.mipmap.bg_collect_out);
-                    } else {
-                        mIvCollect.setImageResource(R.mipmap.bg_collect_in);
-                    }
+                    isCollect = result.isSuccess();
+                    isCollect = action == I.ACTION_DELETE_COLLECT ? false : true;
+                    Log.e("collect", "onSuccess-isCollect:" + isCollect);
                 }
+
+                setCollect();
             }
 
             @Override
             public void onError(String error) {
-
+                isCollect = false;
+                setCollect();
             }
         });
+    }
+
+    private void setCollect() {
+        if (isCollect) {
+            mIvCollect.setImageResource(R.mipmap.bg_collect_out);
+        } else {
+            mIvCollect.setImageResource(R.mipmap.bg_collect_in);
+        }
     }
 
     private int getCount(GoodsDetailsBean bean) {
@@ -142,7 +152,18 @@ public class GoodsDescActivity extends AppCompatActivity {
                 MFGT.finish(GoodsDescActivity.this);
                 break;
             case R.id.iv_collect:
-
+                User user = FuLiApplication.getUser();
+                if (user == null) {
+                    MFGT.gotoLogin(GoodsDescActivity.this, 0);
+                    return;
+                }
+                if (isCollect) {
+                    initCollect(I.ACTION_DELETE_COLLECT, user);
+                    Log.e("collect", "btn:ACTION_DELETE_COLLECT");
+                } else {
+                    initCollect(I.ACTION_ADD_COLLECT, user);
+                    Log.e("collect", "btn:ACTION_ADD_COLLECT");
+                }
                 break;
         }
     }
