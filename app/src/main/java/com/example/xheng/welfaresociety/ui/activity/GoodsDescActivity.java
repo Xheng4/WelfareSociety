@@ -107,8 +107,7 @@ public class GoodsDescActivity extends AppCompatActivity {
             @Override
             public void onSuccess(MessageBean result) {
                 if (result != null) {
-                    isCollect = result.isSuccess();
-                    isCollect = action == I.ACTION_DELETE_COLLECT ? false : true;
+                    isCollect = action == I.ACTION_DELETE_COLLECT ? false : result.isSuccess();
                     Log.e("collect", "onSuccess-isCollect:" + isCollect);
                 }
 
