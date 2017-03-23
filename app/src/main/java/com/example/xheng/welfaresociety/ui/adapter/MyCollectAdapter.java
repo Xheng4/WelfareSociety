@@ -12,24 +12,31 @@ import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.model.bean.CollectBean;
 import com.example.xheng.welfaresociety.model.utils.ImageLoader;
+import com.example.xheng.welfaresociety.ui.activity.MyCollectActivity;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 /**
  * Created by xheng on 2017/3/23.
  */
 
 public class MyCollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    Context mContext;
     ArrayList<CollectBean> mList;
     boolean isMore;
+    int mGoodsID = 0;
+    MyCollectActivity mContext;
 
     public MyCollectAdapter(Context context, ArrayList<CollectBean> list) {
-        mContext = context;
+        mContext = (MyCollectActivity) context;
         mList = list;
+    }
+
+    public int getGoodsID() {
+        return mGoodsID;
     }
 
     private int getFooterString() {
@@ -63,13 +70,14 @@ public class MyCollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             return;
         }
         CollectViewHolder viewHolder = (CollectViewHolder) holder;
-        CollectBean bean = mList.get(position);
+        final CollectBean bean = mList.get(position);
         viewHolder.mTvName.setText(bean.getGoodsName());
 
         ImageLoader.downloadImg(mContext, viewHolder.mIvGoods, bean.getGoodsThumb());
         viewHolder.mIvCollectDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mContext.refreshCollect(bean.getGoodsId());
                 mList.remove(position);
                 notifyDataSetChanged();
             }

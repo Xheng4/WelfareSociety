@@ -13,10 +13,14 @@ import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.application.FuLiApplication;
 import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.model.bean.CollectBean;
+import com.example.xheng.welfaresociety.model.bean.MessageBean;
 import com.example.xheng.welfaresociety.model.bean.User;
+import com.example.xheng.welfaresociety.model.net.GoodsDescModel;
+import com.example.xheng.welfaresociety.model.net.IGoodsDescModle;
 import com.example.xheng.welfaresociety.model.net.IUserModel;
 import com.example.xheng.welfaresociety.model.net.OnCompleteListener;
 import com.example.xheng.welfaresociety.model.net.UserModel;
+import com.example.xheng.welfaresociety.model.utils.CommonUtils;
 import com.example.xheng.welfaresociety.model.utils.ResultUtils;
 import com.example.xheng.welfaresociety.ui.adapter.MyCollectAdapter;
 import com.example.xheng.welfaresociety.ui.widget.MFGT;
@@ -31,8 +35,11 @@ import butterknife.Unbinder;
 public class MyCollectActivity extends AppCompatActivity {
 
     IUserModel mModel;
+    static IGoodsDescModle mGoodsModle;
+
     User mUser;
     int mPageID = 1;
+
     GridLayoutManager mManager;
     ArrayList<CollectBean> mList;
     MyCollectAdapter mAdapter;
@@ -51,6 +58,8 @@ public class MyCollectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_collect);
         bind = ButterKnife.bind(this);
         mModel = new UserModel();
+        mGoodsModle = new GoodsDescModel();
+
         initView();
         initCollect(I.ACTION_DOWNLOAD);
         setListener();
@@ -149,6 +158,25 @@ public class MyCollectActivity extends AppCompatActivity {
     private void isRefresh(boolean isRefresh) {
         mSrlCollect.setRefreshing(isRefresh);
         mTvRefresh.setVisibility(isRefresh ? View.VISIBLE : View.GONE);
+    }
+
+    public void refreshCollect(int goodsID) {
+        mGoodsModle.CollectAction(MyCollectActivity.this, I.ACTION_DELETE_COLLECT, goodsID,
+                mUser.getMuserName(), new OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result != null && result.isSuccess()) {
+                            CommonUtils.showShortToast("删除成功");
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        CommonUtils.showShortToast("删除失败");
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     @Override
