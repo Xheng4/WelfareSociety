@@ -2,13 +2,19 @@ package com.example.xheng.welfaresociety.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.xheng.welfaresociety.R;
+import com.example.xheng.welfaresociety.application.FuLiApplication;
 import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.model.bean.AlbumsBean;
 import com.example.xheng.welfaresociety.model.bean.GoodsDetailsBean;
+import com.example.xheng.welfaresociety.model.bean.MessageBean;
+import com.example.xheng.welfaresociety.model.bean.User;
 import com.example.xheng.welfaresociety.model.net.GoodsDescModel;
 import com.example.xheng.welfaresociety.model.net.IGoodsDescModle;
 import com.example.xheng.welfaresociety.model.net.OnCompleteListener;
@@ -41,6 +47,8 @@ public class GoodsDescActivity extends AppCompatActivity {
     FlowIndicator mIndicator;
     @BindView(R.id.wv_goods_desc)
     WebView mWvGoodsDesc;
+    @BindView(R.id.iv_collect)
+    ImageView mIvCollect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,7 @@ public class GoodsDescActivity extends AppCompatActivity {
     }
 
     private void initData() {
+        Log.e("goodsID", "" + goodsID);
         mModle.loadData(this, goodsID, new OnCompleteListener<GoodsDetailsBean>() {
             @Override
             public void onSuccess(GoodsDetailsBean result) {
@@ -79,8 +88,30 @@ public class GoodsDescActivity extends AppCompatActivity {
         mTvGoodsdesc.setText(bean.getGoodsName());
         mTvGoodsDescPrice.setText(bean.getCurrencyPrice());
         mTvGoodsDescPrice2.setText(bean.getShopPrice());
-        mSalv.startPlayLoop(mIndicator,getUrl(bean),getCount(bean));
-        mWvGoodsDesc.loadDataWithBaseURL(null,bean.getGoodsBrief(),I.TEXT_HTML,I.UTF_8,null);
+        mSalv.startPlayLoop(mIndicator, getUrl(bean), getCount(bean));
+        mWvGoodsDesc.loadDataWithBaseURL(null, bean.getGoodsBrief(), I.TEXT_HTML, I.UTF_8, null);
+        initCollect();
+    }
+
+    private void initCollect() {
+        User user = FuLiApplication.getUser();
+        mModle.loadCollectStatus(GoodsDescActivity.this, goodsID, user.getMuserName(), new OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if (result != null) {
+                    if (result.isSuccess()) {
+                        mIvCollect.setImageResource(R.mipmap.bg_collect_out);
+                    } else {
+                        mIvCollect.setImageResource(R.mipmap.bg_collect_in);
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 
     private int getCount(GoodsDetailsBean bean) {
@@ -93,9 +124,9 @@ public class GoodsDescActivity extends AppCompatActivity {
     private String[] getUrl(GoodsDetailsBean bean) {
         AlbumsBean[] albums = bean.getProperties()[0].getAlbums();
         if (bean.getProperties() != null && bean.getProperties().length > 0) {
-            if (albums!= null && albums.length > 0) {
+            if (albums != null && albums.length > 0) {
                 String[] urls = new String[albums.length];
-                for (int i = 0;i<albums.length;i++) {
+                for (int i = 0; i < albums.length; i++) {
                     urls[i] = albums[0].getImgUrl();
                 }
                 return urls;
@@ -104,8 +135,15 @@ public class GoodsDescActivity extends AppCompatActivity {
         return null;
     }
 
-    @OnClick(R.id.iv_back)
-    public void onClick() {
-        MFGT.finish(GoodsDescActivity.this);
+    @OnClick({R.id.iv_back, R.id.iv_collect})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                MFGT.finish(GoodsDescActivity.this);
+                break;
+            case R.id.iv_collect:
+
+                break;
+        }
     }
 }

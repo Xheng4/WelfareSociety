@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.model.bean.GoodsDetailsBean;
+import com.example.xheng.welfaresociety.model.bean.MessageBean;
 import com.example.xheng.welfaresociety.model.utils.OkHttpUtils;
 
 /**
@@ -17,6 +18,16 @@ public class GoodsDescModel implements IGoodsDescModle {
         utils.setRequestUrl(I.REQUEST_FIND_GOOD_DETAILS)
                 .addParam(I.Goods.KEY_GOODS_ID, String.valueOf(goodsId))
                 .targetClass(GoodsDetailsBean.class)
+                .execute(listener);
+    }
+
+    @Override
+    public void loadCollectStatus(Context context, int goodsId, String userName, OnCompleteListener<MessageBean> listener) {
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_IS_COLLECT)
+                .addParam(I.Collect.USER_NAME, userName)
+                .addParam(I.Collect.GOODS_ID, String.valueOf(goodsId))
+                .targetClass(MessageBean.class)
                 .execute(listener);
     }
 }

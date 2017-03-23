@@ -13,7 +13,12 @@ import android.widget.TextView;
 
 import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.application.FuLiApplication;
+import com.example.xheng.welfaresociety.model.bean.MessageBean;
 import com.example.xheng.welfaresociety.model.bean.User;
+import com.example.xheng.welfaresociety.model.net.INewGoodsModel;
+import com.example.xheng.welfaresociety.model.net.IUserModel;
+import com.example.xheng.welfaresociety.model.net.OnCompleteListener;
+import com.example.xheng.welfaresociety.model.net.UserModel;
 import com.example.xheng.welfaresociety.model.utils.ImageLoader;
 import com.example.xheng.welfaresociety.model.utils.L;
 import com.example.xheng.welfaresociety.ui.widget.MFGT;
@@ -37,6 +42,7 @@ public class PersonalFragment extends Fragment {
     TextView mTvCollectCount;
 
     User mUser;
+    IUserModel mModel;
 
     public PersonalFragment() {
         // Required empty public constructor
@@ -48,6 +54,7 @@ public class PersonalFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
         ButterKnife.bind(this, view);
+        mModel = new UserModel();
         return view;
     }
 
@@ -88,6 +95,27 @@ public class PersonalFragment extends Fragment {
     private void showUserInfo() {
         mTvUserName.setText(mUser.getMuserNick());
         ImageLoader.setAvatar(ImageLoader.getAvatarUrl(mUser), getContext(), mIvUserAvatar);
+        getCollectCount();
+    }
+
+    private void getCollectCount() {
+        mModel.CollectCount(getContext(), mUser.getMuserName(), new OnCompleteListener<MessageBean>() {
+            @Override
+            public void onSuccess(MessageBean result) {
+                if (result != null) {
+                    if (result.isSuccess()) {
+                        mTvCollectCount.setText(result.getMsg());
+                    } else {
+                        mTvCollectCount.setText("0");
+                    }
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 
     @OnClick(R.id.tv_user_name)

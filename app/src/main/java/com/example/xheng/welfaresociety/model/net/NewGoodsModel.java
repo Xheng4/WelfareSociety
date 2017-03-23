@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.xheng.welfaresociety.application.I;
+import com.example.xheng.welfaresociety.model.bean.MessageBean;
 import com.example.xheng.welfaresociety.model.bean.NewGoodsBean;
 import com.example.xheng.welfaresociety.model.utils.OkHttpUtils;
 
@@ -28,4 +29,6 @@ public class NewGoodsModel implements INewGoodsModel {
                 .execute(listener);
 
     }
+
+
 }

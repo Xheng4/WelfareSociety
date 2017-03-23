@@ -105,7 +105,7 @@ public class User {
     public String getAvatar() {
         StringBuffer buffer = new StringBuffer(I.DOWNLOAD_AVATAR_URL);
         buffer.append(I.NAME_OR_HXID).append(I.EQUAL).append(this.getMuserName()).append(I.AND)
-                .append(I.AVATAR_TYPE).append(I.EQUAL).append(this.getMavatarType()).append(I.AND)
+                .append(I.AVATAR_TYPE).append(I.EQUAL).append(this.getMavatarPath()).append(I.AND)
                 .append(I.AVATAR_SUFFIX).append(I.EQUAL).append(this.getMavatarSuffix()).append(I.AND)
                 .append("&width=200&height=200");
         return buffer.toString();

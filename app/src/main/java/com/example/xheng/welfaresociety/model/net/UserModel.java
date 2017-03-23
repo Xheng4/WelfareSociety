@@ -3,6 +3,7 @@ package com.example.xheng.welfaresociety.model.net;
 import android.content.Context;
 
 import com.example.xheng.welfaresociety.application.I;
+import com.example.xheng.welfaresociety.model.bean.MessageBean;
 import com.example.xheng.welfaresociety.model.utils.OkHttpUtils;
 
 import java.io.File;
@@ -54,6 +55,15 @@ public class UserModel implements IUserModel {
                 .addFile2(file)
                 .targetClass(String.class)
                 .post()
+                .execute(listener);
+    }
+
+    @Override
+    public void CollectCount(Context context, String userName, OnCompleteListener<MessageBean> listener) {
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+                .addParam(I.Collect.USER_NAME, userName)
+                .targetClass(MessageBean.class)
                 .execute(listener);
     }
 }
