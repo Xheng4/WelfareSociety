@@ -1,13 +1,65 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.example.xheng.welfaresociety.ui.fragment.CartFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.example.xheng.welfaresociety.ui.fragment.CartFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/rl_cart_bar"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/tv_cart_total_hint"
+            android:text="合计："
+            android:textSize="15sp"
+            android:layout_marginLeft="25dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_cart_total"
+            android:text="total"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/tv_cart_total_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_cart_discount_hint"
+            android:text="节省："
+            android:textSize="15sp"
+            android:layout_marginLeft="25dp"
+            android:layout_below="@+id/tv_cart_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_cart_discount"
+            android:text="discount"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/tv_cart_total"
+            android:layout_toRightOf="@+id/tv_cart_discount_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_cart_pay"
+            android:text="PAY"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/btn_bg_orange"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/list_cart"
+        android:layout_above="@+id/rl_cart_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+</RelativeLayout>
