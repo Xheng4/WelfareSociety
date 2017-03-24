@@ -32,6 +32,9 @@ public class GoodsDescActivity extends AppCompatActivity {
 
     IGoodsDescModle mModle;
     int goodsID = 0;
+    int action = I.ACTION_IS_COLLECT;
+    boolean isCollect;
+
     @BindView(R.id.textView)
     TextView mTextView;
     @BindView(R.id.tv_goodsdesc_name)
@@ -50,8 +53,7 @@ public class GoodsDescActivity extends AppCompatActivity {
     WebView mWvGoodsDesc;
     @BindView(R.id.iv_collect)
     ImageView mIvCollect;
-    int action = I.ACTION_IS_COLLECT;
-    boolean isCollect;
+
 
     AntiShake util = new AntiShake();
 
@@ -99,7 +101,11 @@ public class GoodsDescActivity extends AppCompatActivity {
         mSalv.startPlayLoop(mIndicator, getUrl(bean), getCount(bean));
         mWvGoodsDesc.loadDataWithBaseURL(null, bean.getGoodsBrief(), I.TEXT_HTML, I.UTF_8, null);
         action = I.ACTION_IS_COLLECT;
-        initCollect(action, FuLiApplication.getUser());
+        if (FuLiApplication.getUser() != null) {
+            initCollect(action, FuLiApplication.getUser());
+        } else {
+            isCollect = false;
+        }
     }
 
     private void initCollect(final int action, User user) {

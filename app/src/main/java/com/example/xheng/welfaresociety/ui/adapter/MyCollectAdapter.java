@@ -13,6 +13,7 @@ import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.model.bean.CollectBean;
 import com.example.xheng.welfaresociety.model.utils.ImageLoader;
 import com.example.xheng.welfaresociety.ui.activity.MyCollectActivity;
+import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
 import java.util.ArrayList;
 
@@ -80,6 +81,12 @@ public class MyCollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 mContext.refreshCollect(bean.getGoodsId());
                 mList.remove(position);
                 notifyDataSetChanged();
+            }
+        });
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MFGT.gotoDesc(mContext, bean.getGoodsId());
             }
         });
     }
