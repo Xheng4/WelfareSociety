@@ -3,6 +3,7 @@ package com.example.xheng.welfaresociety.ui.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -27,7 +28,7 @@ import butterknife.ButterKnife;
 
 public class MyCollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     ArrayList<CollectBean> mList;
-    boolean isMore;
+    boolean isMore, isFooter;
     int mGoodsID = 0;
     MyCollectActivity mContext;
 
@@ -52,6 +53,10 @@ public class MyCollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         isMore = more;
     }
 
+    public void setFooter(boolean footer) {
+        isFooter = footer;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;
@@ -68,6 +73,8 @@ public class MyCollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         if (getItemViewType(position) == I.TYPE_FOOTER) {
             FooterViewHolder viewHolder = (FooterViewHolder) holder;
             viewHolder.mTvFooter.setText(getFooterString());
+            viewHolder.mTvFooter.setVisibility(isFooter ? View.GONE : View.VISIBLE);
+            Log.e("footer", "isFooter:" + isFooter);
             return;
         }
         CollectViewHolder viewHolder = (CollectViewHolder) holder;
@@ -86,6 +93,7 @@ public class MyCollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO 跳转还没做好
                 MFGT.gotoDesc(mContext, bean.getGoodsId());
             }
         });
@@ -107,6 +115,7 @@ public class MyCollectAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     class FooterViewHolder extends ViewHolder {
         @BindView(R.id.tv_footer)
         TextView mTvFooter;
+
 
         FooterViewHolder(View view) {
             super(view);

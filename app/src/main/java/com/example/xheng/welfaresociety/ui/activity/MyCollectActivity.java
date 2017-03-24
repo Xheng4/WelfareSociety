@@ -65,6 +65,12 @@ public class MyCollectActivity extends AppCompatActivity {
         setListener();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initCollect(I.ACTION_DOWNLOAD);
+    }
+
     private void setListener() {
         refreshListener();
         footerListener();
@@ -109,6 +115,8 @@ public class MyCollectActivity extends AppCompatActivity {
             @Override
             public void onSuccess(CollectBean[] result) {
                 if (result != null && result.length > 0) {
+                    isRefresh(false);
+                    mAdapter.setMore(true);
                     ArrayList<CollectBean> list = ResultUtils.array2List(result);
                     if (action == I.ACTION_DOWNLOAD || action == I.ACTION_PULL_DOWN) {
                         mList.clear();
@@ -118,6 +126,8 @@ public class MyCollectActivity extends AppCompatActivity {
                     if (list.size() < I.PAGE_SIZE_DEFAULT) {
                         mAdapter.setMore(false);
                     }
+                    Log.e("footer", "mPageID" + mPageID);
+                    mAdapter.setFooter(mPageID == 1);
                 }
                 mAdapter.notifyDataSetChanged();
             }
