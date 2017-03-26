@@ -7,9 +7,12 @@
     android:layout_height="match_parent"
     tools:context="com.example.xheng.welfaresociety.ui.activity.GoodsDescActivity">
     <RelativeLayout
+        android:background="@color/orange"
         android:id="@+id/rl_gd_tilte"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -21,18 +24,29 @@
         <TextView
             android:id="@+id/textView"
             android:maxLines="1"
-            android:layout_width="200dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="aaaaa"
-            android:textSize="25sp"/>
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="18sp"/>
 
         <ImageView
             android:id="@+id/iv_collect"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
+            android:layout_marginRight="10dp"
             android:src="@mipmap/bg_collect_in"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
+        <ImageView
+            android:id="@+id/iv_cart"
+            android:layout_toLeftOf="@id/iv_collect"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/bg_cart_selected"
             android:layout_width="30dp"
             android:layout_height="30dp"/>
     </RelativeLayout>

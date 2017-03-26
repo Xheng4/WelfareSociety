@@ -15,7 +15,9 @@ import com.example.xheng.welfaresociety.model.bean.AlbumsBean;
 import com.example.xheng.welfaresociety.model.bean.GoodsDetailsBean;
 import com.example.xheng.welfaresociety.model.bean.MessageBean;
 import com.example.xheng.welfaresociety.model.bean.User;
+import com.example.xheng.welfaresociety.model.net.CartModel;
 import com.example.xheng.welfaresociety.model.net.GoodsDescModel;
+import com.example.xheng.welfaresociety.model.net.ICartModel;
 import com.example.xheng.welfaresociety.model.net.IGoodsDescModle;
 import com.example.xheng.welfaresociety.model.net.OnCompleteListener;
 import com.example.xheng.welfaresociety.model.utils.AntiShake;
@@ -31,8 +33,10 @@ import butterknife.OnClick;
 public class GoodsDescActivity extends AppCompatActivity {
 
     IGoodsDescModle mModle;
+    ICartModel mCartModel;
     int goodsID = 0;
     int action = I.ACTION_IS_COLLECT;
+    int cartAction = I.ACTION_CART_ADD;
     boolean isCollect;
 
     @BindView(R.id.textView)
@@ -53,11 +57,11 @@ public class GoodsDescActivity extends AppCompatActivity {
     WebView mWvGoodsDesc;
     @BindView(R.id.iv_collect)
     ImageView mIvCollect;
+    @BindView(R.id.iv_cart)
+    ImageView mIvCart;
 
 
     AntiShake util = new AntiShake();
-
-
 
 
     @Override
@@ -70,6 +74,7 @@ public class GoodsDescActivity extends AppCompatActivity {
             MFGT.finish(GoodsDescActivity.this);
         } else {
             mModle = new GoodsDescModel();
+            mCartModel = new CartModel();
             initData();
         }
     }
@@ -100,12 +105,31 @@ public class GoodsDescActivity extends AppCompatActivity {
         mTvGoodsDescPrice2.setText(bean.getShopPrice());
         mSalv.startPlayLoop(mIndicator, getUrl(bean), getCount(bean));
         mWvGoodsDesc.loadDataWithBaseURL(null, bean.getGoodsBrief(), I.TEXT_HTML, I.UTF_8, null);
-        action = I.ACTION_IS_COLLECT;
-        if (FuLiApplication.getUser() != null) {
-            initCollect(action, FuLiApplication.getUser());
+//        action = I.ACTION_IS_COLLECT;
+        User user = FuLiApplication.getUser();
+        if (user != null) {
+            initCollect(action, user);
+
         } else {
             isCollect = false;
         }
+    }
+
+    private void addCart(User user) {
+        mCartModel.cartAction(this, cartAction, 1, user.getMuserName(), null,
+                String.valueOf(goodsID), new OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result != null && result.isSuccess()) {
+                            CommonUtils.showShortToast(R.string.add_cart_success);
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        CommonUtils.showShortToast(R.string.add_cart_fail);
+                    }
+                });
     }
 
     private void initCollect(final int action, User user) {
@@ -157,13 +181,14 @@ public class GoodsDescActivity extends AppCompatActivity {
         return null;
     }
 
-    @OnClick({R.id.iv_back, R.id.iv_collect})
+    @OnClick({R.id.iv_back, R.id.iv_collect, R.id.iv_cart})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
                 MFGT.finish(GoodsDescActivity.this);
                 break;
             case R.id.iv_collect:
+
                 if (util.check(view.getId())) return;
                 User user = FuLiApplication.getUser();
                 if (user == null) {
@@ -177,6 +202,15 @@ public class GoodsDescActivity extends AppCompatActivity {
                     initCollect(I.ACTION_ADD_COLLECT, user);
                     Log.e("collect", "btn:ACTION_ADD_COLLECT");
                 }
+
+                break;
+            case R.id.iv_cart:
+                user = FuLiApplication.getUser();
+                if (user == null) {
+                    MFGT.gotoLogin(GoodsDescActivity.this, 0);
+                    return;
+                }
+                addCart(user);
                 break;
         }
     }
