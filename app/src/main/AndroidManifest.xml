@@ -40,6 +40,8 @@
         </activity>
         <activity android:name=".ui.activity.MyCollectActivity">
         </activity>
+        <activity android:name=".ui.activity.OrderForGoodsActivity">
+        </activity>
     </application>
 
 </manifest>
