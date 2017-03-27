@@ -32,9 +32,10 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                User user = FuLiApplication.getUser();
                 String username = SharedPreferencesUtils.getmUtils().getUserName();
-                if (username != null) {
-                    User user = DBUser.getInstance(SplashActivity.this).getUserInfo(username);
+                if (user == null && username != null) {
+                    user = DBUser.getInstance(SplashActivity.this).getUserInfo(username);
                     Log.d("user", "SplashActivity,user:" + user.toString());
                     FuLiApplication.setUser(user);
                 }

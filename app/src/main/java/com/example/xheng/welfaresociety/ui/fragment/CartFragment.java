@@ -10,12 +10,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.xheng.welfaresociety.R;
 import com.example.xheng.welfaresociety.application.FuLiApplication;
+import com.example.xheng.welfaresociety.application.I;
 import com.example.xheng.welfaresociety.model.bean.CartBean;
+import com.example.xheng.welfaresociety.model.bean.GoodsDetailsBean;
+import com.example.xheng.welfaresociety.model.bean.MessageBean;
 import com.example.xheng.welfaresociety.model.bean.User;
 import com.example.xheng.welfaresociety.model.net.CartModel;
 import com.example.xheng.welfaresociety.model.net.ICartModel;
@@ -74,15 +78,82 @@ public class CartFragment extends Fragment {
         mList = new ArrayList<>();
         mAdapter = new CartAdapter(getContext(), mList);
         mListView.setAdapter(mAdapter);
+        setOnClick();
 
     }
+
+    private void setOnClick() {
+        mAdapter.setMcheckedListener(mCheckedChangeListener);
+        mAdapter.setUpDateClickListener(mOnClickListener);
+
+    }
+
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int position = (int) v.getTag();
+            int count = 0;
+            if (v.getTag(R.id.ACTION_CART_ADD) != null) {
+                count = (int) v.getTag(R.id.ACTION_CART_ADD);
+            }
+            if (v.getTag(R.id.ACTION_CART_del) != null) {
+                count = (int) v.getTag(R.id.ACTION_CART_del);
+            }
+            upDateGoodsCount(position, count);
+        }
+    };
+
+    private void upDateGoodsCount(final int position, final int i) {
+        CartBean bean = mList.get(position);
+        int action = bean.getCount() + i > 0 ? I.ACTION_CART_UPDATA : I.ACTION_CART_DEL;
+
+        mModel.cartAction(getContext(), action, bean.getCount() + i,
+                FuLiApplication.getUser().getMuserName(),
+                String.valueOf(bean.getId()), String.valueOf(bean.getGoodsId()),
+                new OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result != null) {
+                            upDateCartCount(position, i);
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        mSRL.setRefreshing(false);
+                        Log.e("cart", "onError:" + error);
+                    }
+                });
+    }
+
+
+    private void upDateCartCount(int position, int i) {
+        mList.get(position).setCount(mList.get(position).getCount() + i);
+        if (mList.get(position).getCount() + i == 0) {
+            mList.remove(position);
+        }
+        mAdapter.notifyDataSetChanged();
+
+    }
+
+    CompoundButton.OnCheckedChangeListener mCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            int position = (int) buttonView.getTag();
+            mList.get(position).setChecked(isChecked);
+            setPriceText();
+        }
+    };
 
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mModel = new CartModel();
-        initData();
+        mUser = FuLiApplication.getUser();
+        if (mUser != null) {
+            initData();
+        }
         setRefresh();
     }
 
@@ -98,6 +169,7 @@ public class CartFragment extends Fragment {
     }
 
     private void initData() {
+
         mUser = FuLiApplication.getUser();
         mModel.loadCart(getContext(), mUser.getMuserName(), new OnCompleteListener<CartBean[]>() {
             @Override
@@ -107,6 +179,7 @@ public class CartFragment extends Fragment {
                     Log.e("cart", "onSuccess(result):" + result.length);
 
                     mList = ResultUtils.array2List(result);
+                    mAdapter.initData(mList);
 
                 }
 
@@ -122,5 +195,27 @@ public class CartFragment extends Fragment {
 
     @OnClick(R.id.btn_cart_pay)
     public void onClick() {
+    }
+
+    private void setPriceText() {
+        int sumPrice = 0;
+        int rankPrice = 0;
+        for (CartBean bean : mList) {
+            if (bean.isChecked()) {
+                GoodsDetailsBean goods = bean.getGoods();
+                if (goods != null) {
+                    sumPrice += getPrice(goods.getCurrencyPrice()) * bean.getCount();
+                    rankPrice += getPrice(goods.getRankPrice()) * bean.getCount();
+                    Log.e("cart", "sumPrice:" + sumPrice);
+                }
+            }
+        }
+        mTvCartTotal.setText(sumPrice + "");
+        mTvCartDiscount.setText(sumPrice - rankPrice + "");
+    }
+
+    private int getPrice(String string) {
+        String str = string.substring(string.indexOf("￥") + 1);
+        return Integer.valueOf(str);
     }
 }
