@@ -49,6 +49,16 @@
             android:src="@mipmap/bg_cart_selected"
             android:layout_width="30dp"
             android:layout_height="30dp"/>
+
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_toLeftOf="@id/iv_cart"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/selector_share_bg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+
     </RelativeLayout>
 <LinearLayout
     android:layout_below="@+id/rl_gd_tilte"

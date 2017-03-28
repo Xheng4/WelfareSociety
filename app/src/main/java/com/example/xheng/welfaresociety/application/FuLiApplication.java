@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.example.xheng.welfaresociety.model.bean.User;
 
+import cn.sharesdk.framework.ShareSDK;
+
 /**
  * Created by xheng on 2017/3/14.
  */
@@ -17,6 +19,7 @@ public class FuLiApplication extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        ShareSDK.initSDK(this);
     }
 
     public static User getUser() {
