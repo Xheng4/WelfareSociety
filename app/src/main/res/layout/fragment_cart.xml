@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
             android:background="@color/white">
 
             <TextView
@@ -64,7 +63,7 @@
                 android:text="PAY"/>
         </RelativeLayout>
 
-        <ListView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/list_view_cart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

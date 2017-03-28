@@ -1,10 +1,13 @@
 package com.example.xheng.welfaresociety.ui.fragment;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +29,7 @@ import com.example.xheng.welfaresociety.model.net.ICartModel;
 import com.example.xheng.welfaresociety.model.net.OnCompleteListener;
 import com.example.xheng.welfaresociety.model.utils.ResultUtils;
 import com.example.xheng.welfaresociety.ui.adapter.CartAdapter;
+import com.example.xheng.welfaresociety.ui.widget.MFGT;
 
 import java.util.ArrayList;
 
@@ -50,8 +54,8 @@ public class CartFragment extends Fragment {
     @BindView(R.id.btn_cart_pay)
     Button mBtnCartPay;
     SwipeRefreshLayout mSRL;
-    ListView mListView;
-
+    RecyclerView mRecyclerView;
+    LinearLayoutManager mManager;
     public CartFragment() {
         // Required empty public constructor
     }
@@ -68,7 +72,7 @@ public class CartFragment extends Fragment {
 
     private void initView(View view) {
         mSRL = (SwipeRefreshLayout) view.findViewById(R.id.cart_refresh_layout);
-        mListView = (ListView) view.findViewById(R.id.list_view_cart);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.list_view_cart);
         mSRL.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_green),
@@ -77,7 +81,9 @@ public class CartFragment extends Fragment {
 
         mList = new ArrayList<>();
         mAdapter = new CartAdapter(getContext(), mList);
-        mListView.setAdapter(mAdapter);
+        mManager = new LinearLayoutManager(getContext());
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(mManager);
         setOnClick();
 
     }
@@ -113,6 +119,7 @@ public class CartFragment extends Fragment {
                 new OnCompleteListener<MessageBean>() {
                     @Override
                     public void onSuccess(MessageBean result) {
+
                         if (result != null) {
                             upDateCartCount(position, i);
                         }
@@ -175,9 +182,9 @@ public class CartFragment extends Fragment {
             @Override
             public void onSuccess(CartBean[] result) {
                 mSRL.setRefreshing(false);
+                setPriceText();
                 if (result != null) {
                     Log.e("cart", "onSuccess(result):" + result.length);
-
                     mList = ResultUtils.array2List(result);
                     mAdapter.initData(mList);
 
@@ -194,7 +201,8 @@ public class CartFragment extends Fragment {
     }
 
     @OnClick(R.id.btn_cart_pay)
-    public void onClick() {
+    public void onPay() {
+        MFGT.gotoOrder((Activity) getContext());
     }
 
     private void setPriceText() {
